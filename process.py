@@ -43,7 +43,7 @@ def fetch_article_content(url):
         return None
 
 def process_with_claude(article_content, url):
-    prompt = f"{HUMAN_PROMPT}Extract information from the following article and format it as JSON. The JSON should include the following fields: date (in yyyy-MM-dd format), address, title, url, is_roundabout (boolean), and fatal_victims (integer). If a piece of information is not present, use null for the value. Here's the article:\n\n{article_content}\n\nThe URL for this article is: {url}\n\nIf the article is not about a traffic accident involving cars and/or motorcycles, return an empty JSON object {{}}.\n{AI_PROMPT}"
+    prompt = f"{HUMAN_PROMPT}Extract information from the following article and format it as JSON. The JSON should include the following fields: date (in yyyy-MM-dd format), address, title, url, is_roundabout (boolean), and fatal_victims (integer). If a piece of information is not present, use null for the value. Here's the article:\n\n{article_content}\n\nThe URL for this article is: {url}\n\nIf the article is not about a traffic accident involving cars and/or motorcycles, return an empty JSON object.\nAccidents that occur in roudabouts usually contains the words 'rotatoria', 'rotula', or 'posto da mirta'. Exclude news about plane crashes and any news outside of marechal candido rondon. Only return the JSON if the accident was inside the city of marechal candido rondon\n{AI_PROMPT}"
 
     try:
         result = client.messages.create(
@@ -55,7 +55,7 @@ def process_with_claude(article_content, url):
                     "content": prompt,
                 }
             ],
-            model="claude-3-opus-20240229",
+            model="claude-3-sonnet-20240229",
         )
         return result.content[0].text
     except Exception as e:
