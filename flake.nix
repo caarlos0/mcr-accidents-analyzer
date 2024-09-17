@@ -14,6 +14,7 @@
         pythonWithPackages = python.withPackages (ps: with ps; [
           requests
           beautifulsoup4
+          anthropic
         ]);
       in
       {
