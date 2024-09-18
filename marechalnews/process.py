@@ -54,6 +54,9 @@ def process_article(row, conn):
         print(f"Could not find content for article: {url}")
         return
 
+    for element in content_div.select('div.box-comentarios, div.box-relacionados'):
+        element.decompose()
+
     content = content_div.get_text(strip=True)
 
     date_element = soup.select_one('div.data-post span')
