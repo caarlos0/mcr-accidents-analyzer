@@ -5,7 +5,7 @@ import re
 
 
 def is_relevant_article(title, description):
-    keywords = ["marechal candido rondon", "marechal rondon"]
+    keywords = ["marechal candido rondon", "marechal rondon", "marechal cândido rondon"]
     content = (title + " " + description).lower()
 
     # Check if the content contains any of the keywords
@@ -58,7 +58,7 @@ def scrape_marechalnews():
         writer = csv.writer(csvfile)
         writer.writerow(['Title', 'Description', 'URL'])  # Header
 
-        while True:
+        while page_number < 1005:
             url = f"{base_url}{page_number}"
             print(f"Scraping page {page_number}...")
 
